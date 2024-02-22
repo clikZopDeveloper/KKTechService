@@ -49,7 +49,7 @@ public class ApiContants {
         const val getAllocationRequest = "get-allocation-request"
         const val getUpdateAllocateRequest = "update-allocation-request"
         const val getUpdateComplaint = "update-complaint"
-
+        const val getLocationUpdate = "location-update"
 
 
 

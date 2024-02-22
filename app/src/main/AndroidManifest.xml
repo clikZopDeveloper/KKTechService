@@ -76,6 +76,9 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
         </activity>
+        <service
+            android:name=".Activity.LocationService"
+            android:exported="false" />
         <activity
             android:name=".Activity.DashboardActivity"
             android:exported="true"

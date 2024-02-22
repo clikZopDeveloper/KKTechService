@@ -47,7 +47,7 @@ class LoginActivity : AppCompatActivity(), ApiResponseListner {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
-
+        window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         //  loginViewModel = ViewModelProvider(this, ViewModelFactory(this)).get(LoginViewModel::class.java )
@@ -108,7 +108,6 @@ class LoginActivity : AppCompatActivity(), ApiResponseListner {
                     GeneralUtilities.launchActivity(this, DashboardActivity::class.java)
                     finishAffinity()
                 }
-
             }
         } catch (e: Exception) {
             Log.d("error>>", e.localizedMessage)

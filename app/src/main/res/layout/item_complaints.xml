@@ -366,11 +366,23 @@
                     android:textColor="@color/white"
                     android:padding="4dp"/>
                 <TextView
+                    android:id="@+id/tvResume"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Resume"
+                    android:visibility="gone"
+                  android:layout_marginEnd="@dimen/_5dip"
+                    android:layout_gravity="end"
+                    android:background="@drawable/btn_round_shape_white"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:textColor="@color/white"
+                    android:padding="4dp"/>
+                <TextView
                     android:id="@+id/tvStop"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Stop"
-                    android:visibility="gone"
+                   android:visibility="gone"
                     android:background="@drawable/btn_round_shape_white"
                     android:backgroundTint="@color/paymentsdk_color_red"
                     android:textColor="@color/white"

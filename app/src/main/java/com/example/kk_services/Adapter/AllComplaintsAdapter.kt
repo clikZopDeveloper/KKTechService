@@ -51,7 +51,7 @@ class AllComplaintsAdapter(var context: Activity, var list: List<AllComplaintsBe
       //      holder.itemView.visibility=View.GONE
         }*/
 if (!list[position].lastWorkStatus.isNullOrEmpty()){
-    if (list[position].lastWorkStatus.equals("start")||list[position].lastWorkStatus.equals("under_process")){
+    if (list[position].lastWorkStatus.equals("start")){
         holder.tvStart.visibility=View.GONE
         holder.tvInprogress.visibility=View.VISIBLE
         holder.tvStop.visibility=View.VISIBLE
@@ -69,6 +69,13 @@ if (!list[position].lastWorkStatus.isNullOrEmpty()){
         holder.tvStop.visibility=View.GONE
         holder.tvCompleted.visibility=View.GONE
         holder.tvRejected.visibility=View.GONE
+    }else if (list[position].lastWorkStatus.equals("under_process")){
+        holder.tvStart.visibility=View.GONE
+        holder.tvInprogress.visibility=View.GONE
+        holder.tvResume.visibility=View.VISIBLE
+        holder.tvStop.visibility=View.VISIBLE
+        holder.tvCompleted.visibility=View.GONE
+        holder.tvRejected.visibility=View.GONE
     }else{
         holder.tvStart.visibility=View.GONE
         holder.tvInprogress.visibility=View.GONE
@@ -79,23 +86,27 @@ if (!list[position].lastWorkStatus.isNullOrEmpty()){
 }
 
         holder.tvStart.setOnClickListener {
-            rvClickListner.clickPos("processing","start",list[position].id)
+            rvClickListner.clickPos("processing","start","",list[position].id)
         }
 
         holder.tvInprogress.setOnClickListener {
-            rvClickListner.clickPos("processing","under_process",list[position].id)
+            rvClickListner.clickPos("processing","under_process","",list[position].id)
         }
 
         holder.tvStop.setOnClickListener {
-            rvClickListner.clickPos("processing","stop",list[position].id)
+            rvClickListner.clickPos("processing","stop","",list[position].id)
         }
 
         holder.tvCompleted.setOnClickListener {
-            rvClickListner.clickPos("completed","completed",list[position].id)
+            rvClickListner.clickPos("completed","completed",list[position].payableAmt,list[position].id)
+        }
+
+      holder.tvResume.setOnClickListener {
+            rvClickListner.clickPos("processing","start",list[position].payableAmt,list[position].id)
         }
 
         holder.tvRejected.setOnClickListener {
-            rvClickListner.clickPos("rejected","rejected",list[position].id)
+            rvClickListner.clickPos("rejected","rejected","",list[position].id)
         }
     }
 
@@ -121,6 +132,7 @@ if (!list[position].lastWorkStatus.isNullOrEmpty()){
         val tvStop: TextView = itemview.findViewById(R.id.tvStop)
         val tvCompleted: TextView = itemview.findViewById(R.id.tvCompleted)
         val tvRejected: TextView = itemview.findViewById(R.id.tvRejectess)
+        val tvResume: TextView = itemview.findViewById(R.id.tvResume)
 
     }
 

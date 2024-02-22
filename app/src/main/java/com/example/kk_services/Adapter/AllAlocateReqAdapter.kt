@@ -45,10 +45,16 @@ class AllAlocateReqAdapter(
         holder.tvName.text = list[position].customerName
         holder.tvMobile.text = list[position].mobile
 
-        holder.tvServiceType.text = list[position].serviceType.toString()
-        holder.tvDate.text = list[position].createdDate.toString()
-        holder.tvID.text = list[position].id.toString()
-
+        holder.tvServiceType.text = list[position].serviceType?.toString()
+        holder.tvComplainDescription.text = list[position].complainDescription?.toString()
+        holder.tvRecommendation.text = list[position].recommendation?.toString()
+        holder.tvStatus.text = list[position].status?.toString()
+        holder.tvcoment.text = list[position].comments?.toString()
+        holder.tvDate.text = list[position].createdDate?.toString()
+        holder.tvID.text = list[position].id?.toString()
+        holder.tvProducts.text = list[position].products?.toString()
+        holder.tvSuggestion.text = list[position].suggestion?.toString()
+        holder.tvDepartment.text = list[position].address?.toString()
         // holder.ivImage.setImageDrawable(context.resources.getDrawable(list[position].drawableId))
         if (list[position].status.equals("accepted") || list[position].status.equals("rejected")) {
             holder.tvBtn.visibility = View.GONE
@@ -57,10 +63,10 @@ class AllAlocateReqAdapter(
         }
 
         holder.tvAccpt.setOnClickListener {
-            rvClickListner.clickPos("accepted","accepted",list[position].id)
+            rvClickListner.clickPos("accepted","accepted","",list[position].id)
         }
         holder.tvReject.setOnClickListener {
-            rvClickListner.clickPos("rejected","rejected",list[position].id)
+            rvClickListner.clickPos("rejected","rejected","",list[position].id)
         }
         /*holder.itemView.setOnClickListener {
             rvClickListner.clickPos("",list[position].id)
@@ -75,9 +81,16 @@ class AllAlocateReqAdapter(
         val tvID: TextView = itemview.findViewById(R.id.tvID)
         val tvName: TextView = itemview.findViewById(R.id.tvName)
         val tvMobile: TextView = itemview.findViewById(R.id.tvMobile)
+        val tvDepartment: TextView = itemview.findViewById(R.id.tvDepartment)
+        val tvComplainDescription: TextView = itemview.findViewById(R.id.tvComplainDescription)
+        val tvRecommendation: TextView = itemview.findViewById(R.id.tvRecommendation)
 
-        val tvServiceType: TextView = itemview.findViewById(R.id.tvServiceType)
         val tvDate: TextView = itemview.findViewById(R.id.tvDate)
+        val tvStatus: TextView = itemview.findViewById(R.id.tvStatus)
+        val tvcoment: TextView = itemview.findViewById(R.id.tvcoment)
+        val tvServiceType: TextView = itemview.findViewById(R.id.tvServiceType)
+        val tvProducts: TextView = itemview.findViewById(R.id.tvProducts)
+        val tvSuggestion: TextView = itemview.findViewById(R.id.tvSuggestion)
         val tvAccpt: TextView = itemview.findViewById(R.id.tvAccpt)
         val tvReject: TextView = itemview.findViewById(R.id.tvReject)
         val tvBtn: LinearLayout = itemview.findViewById(R.id.tvBtn)

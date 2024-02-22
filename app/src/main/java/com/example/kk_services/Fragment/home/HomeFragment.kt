@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -54,7 +55,7 @@ class HomeFragment : Fragment(), ApiResponseListner {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
+        requireActivity().window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         binding.refreshLayout.setOnRefreshListener {
             apiCallDashboard()
             binding.refreshLayout.isRefreshing = false
@@ -147,8 +148,6 @@ class HomeFragment : Fragment(), ApiResponseListner {
 
 
 
-
-
                     if (!dashboardBean.data.complaints.pending.isNullOrEmpty()) {
                         pendingComplaint = dashboardBean.data.complaints.pending
                     } else {
@@ -189,6 +188,11 @@ class HomeFragment : Fragment(), ApiResponseListner {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        apiCallDashboard()
     }
 
     fun handleRcDashboard() {
@@ -296,5 +300,11 @@ class HomeFragment : Fragment(), ApiResponseListner {
             intent.setPackage(null)
             startActivity(intent)
         }
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+      //  requireActivity().startService(Intent(requireActivity(), LocationService::class.java))
     }
 }

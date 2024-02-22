@@ -107,7 +107,6 @@
 
             </LinearLayout>
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -119,13 +118,97 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Service Type : "
+                    android:text="Address : "
+                    android:layout_below="@+id/tvStartTime"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="@dimen/_14sp" />
+                <TextView
+                    android:id="@+id/tvDepartment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_below="@+id/tvStartTime"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textSize="@dimen/_14sp"
+                    android:layout_marginStart="@dimen/_10dp"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5dip"
+                android:padding="@dimen/_2dip"
+                android:layout_marginHorizontal="@dimen/_5dip"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Comment : "
+                    android:layout_below="@+id/tvStartTime"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="@dimen/_14sp" />
+                <TextView
+                    android:id="@+id/tvcoment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_below="@+id/tvStartTime"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textSize="@dimen/_14sp"
+                    android:layout_marginStart="@dimen/_10dp"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5dip"
+                android:padding="@dimen/_2dip"
+                android:layout_marginHorizontal="@dimen/_5dip"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ServiceType : "
                     android:layout_below="@+id/tvStartTime"
                     android:layout_gravity="center"
                     android:fontFamily="@font/roboto_regular"
                     android:textSize="@dimen/_14sp" />
                 <TextView
                     android:id="@+id/tvServiceType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_below="@+id/tvStartTime"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textSize="@dimen/_14sp"
+                    android:layout_marginStart="@dimen/_10dp"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5dip"
+                android:padding="@dimen/_2dip"
+                android:layout_marginHorizontal="@dimen/_5dip"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Status : "
+                    android:layout_below="@+id/tvStartTime"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="@dimen/_14sp" />
+                <TextView
+                    android:id="@+id/tvStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
@@ -153,6 +236,119 @@
                     android:textSize="@dimen/_12sp" />
                 <TextView
                     android:id="@+id/tvDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/_10dp"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textSize="@dimen/_14sp"
+                    android:textColor="@color/black" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_2dip"
+                android:layout_marginTop="@dimen/_5dip"
+                android:layout_marginHorizontal="@dimen/_5dip"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Products : "
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="@dimen/_12sp" />
+                <TextView
+                    android:id="@+id/tvProducts"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/_10dp"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textSize="@dimen/_14sp"
+                    android:textColor="@color/black" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_2dip"
+                android:layout_marginTop="@dimen/_5dip"
+                android:layout_marginHorizontal="@dimen/_5dip"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Complain Description : "
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="@dimen/_12sp" />
+                <TextView
+                    android:id="@+id/tvComplainDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/_10dp"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textSize="@dimen/_14sp"
+                    android:textColor="@color/black" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_2dip"
+                android:layout_marginTop="@dimen/_5dip"
+                android:layout_marginHorizontal="@dimen/_5dip"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Recommendation : "
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="@dimen/_12sp" />
+                <TextView
+                    android:id="@+id/tvRecommendation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/_10dp"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textSize="@dimen/_14sp"
+                    android:textColor="@color/black" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_2dip"
+                android:layout_marginTop="@dimen/_5dip"
+                android:layout_marginHorizontal="@dimen/_5dip"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Suggestion : "
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="@dimen/_12sp" />
+                <TextView
+                    android:id="@+id/tvSuggestion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""

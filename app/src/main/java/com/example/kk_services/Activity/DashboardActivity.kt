@@ -12,6 +12,7 @@ import android.provider.Settings
 import android.util.Log
 import android.view.Menu
 import android.view.View
+import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -74,25 +75,21 @@ class DashboardActivity : AppCompatActivity(), ApiResponseListner {
 
         val headerView: View = binding.navView.getHeaderView(0)
 
-
-
-
-
         rcMaster = headerView.findViewById<RecyclerView>(R.id.rcMaster)
         llMaster = headerView.findViewById<LinearLayout>(R.id.llMaster)
         ivDownArrowMaster = headerView.findViewById<ImageView>(R.id.ivDownArrowMaster)
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
 
-
         binding.appBarMain.appbarLayout.ivMenu.setOnClickListener {
             drawerLayout.open()
         }
+
         handleRcMaster()
         getLocation()
 
-
-
+        window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+        startService(Intent(this, LocationService::class.java))
         //   binding.appBarMain.appbarLayout.switchDayStart="Day Start"
         binding.appBarMain.appbarLayout.ivLogout.setOnClickListener {
             apiCallLogout()
@@ -160,7 +157,7 @@ class DashboardActivity : AppCompatActivity(), ApiResponseListner {
         SalesApp.isAddAccessToken = true
         apiClient = ApiController(this, this)
         val params = Utility.getParmMap()
-        params["last_location"] = "${list?.get(0)?.latitude},${list?.get(0)?.latitude}"
+        params["last_location"] = "${list?.get(0)?.latitude},${list?.get(0)?.longitude}"
         apiClient.progressView.showLoader()
         apiClient.getApiPostCall(dayStatus, params)
 
@@ -172,7 +169,7 @@ class DashboardActivity : AppCompatActivity(), ApiResponseListner {
         SalesApp.isAddAccessToken = true
         apiClient = ApiController(this, this)
         val params = Utility.getParmMap()
-        params["last_location"] = "${list?.get(0)?.latitude},${list?.get(0)?.latitude}"
+        params["last_location"] = "${list?.get(0)?.latitude},${list?.get(0)?.longitude}"
         apiClient.progressView.showLoader()
         apiClient.getApiPostCall(ApiContants.logout, params)
 
@@ -392,5 +389,9 @@ class DashboardActivity : AppCompatActivity(), ApiResponseListner {
             LocationManager.NETWORK_PROVIDER
         )
     }
-
+    override fun onDestroy() {
+        super.onDestroy()
+        // Start the LocationService when the app is closed
+    //    startService(Intent(this, LocationService::class.java))
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.kk_services.Activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
@@ -33,6 +34,7 @@ class SplashActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedLi
     //    setContentView(R.layout.activity_splash)
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         myReceiver = ConnectivityListener()
@@ -91,5 +93,11 @@ class SplashActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedLi
                 initNotificationRefresher()
             }
         }.start()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // Start the LocationService when the app is closed
+    //    startService(Intent(this, LocationService::class.java))
     }
 }

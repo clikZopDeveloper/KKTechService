@@ -38,7 +38,7 @@ class AllExpensesActivity : AppCompatActivity(), ApiResponseListner,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_allcontact)
-
+        window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         myReceiver = ConnectivityListener()
 
@@ -134,5 +134,9 @@ class AllExpensesActivity : AppCompatActivity(), ApiResponseListner,
     }
 
     override fun onConnectionFailed(connectionResult: ConnectionResult) {}
-
+    override fun onDestroy() {
+        super.onDestroy()
+        // Start the LocationService when the app is closed
+       // startService(Intent(this, LocationService::class.java))
+    }
 }

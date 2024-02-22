@@ -39,6 +39,7 @@ import com.example.kk_services.databinding.ActivityAllComplaintsBinding
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.Gson
 import com.google.gson.JsonElement
@@ -75,10 +76,10 @@ class AllComplaintsActivity : AppCompatActivity(), ApiResponseListner,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_all_complaints)
-
+        window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         myReceiver = ConnectivityListener()
-
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         binding.igToolbar.tvTitle.text = "All Complaints"
         binding.igToolbar.ivMenu.setImageDrawable(resources.getDrawable(R.drawable.ic_back_black))
         binding.igToolbar.ivMenu.setOnClickListener { finish() }
@@ -86,7 +87,8 @@ class AllComplaintsActivity : AppCompatActivity(), ApiResponseListner,
         binding.igToolbar.switchDayStart.visibility = View.GONE
 
         intent.getStringExtra("Status")?.let { apiAllCompaints(it) }
-        requestPermission()
+      //  requestPermission()
+        getLocation()
     }
 
     fun apiAllCompaints(status: String) {
@@ -103,13 +105,11 @@ class AllComplaintsActivity : AppCompatActivity(), ApiResponseListner,
         binding.rcOfficeTeam.layoutManager = LinearLayoutManager(this)
         var mAdapter = AllComplaintsAdapter(this, data, object :
             RvStatusComplClickListner {
-            override fun clickPos(status: String,workstatus: String, id: Int) {
-                if (workstatus.equals("under_process")||workstatus.equals("stop")){
+            override fun clickPos(status: String,workstatus: String,payableAmt: String, id: Int) {
+                if (workstatus.equals("under_process")||workstatus.equals("stop")||workstatus.equals("rejected")||workstatus.equals("start")){
                     dialogRemark(status,workstatus,id)
                 }else if (workstatus.equals("completed")){
-                    openCompletdDialog(status,workstatus,id)
-                }else if (workstatus.equals("rejected")){
-                    dialogRemark(status,workstatus,id)
+                    openCompletdDialog(status,workstatus,id,payableAmt)
                 }else{
                     dialog(status,workstatus,id)
                 }
@@ -156,6 +156,7 @@ class AllComplaintsActivity : AppCompatActivity(), ApiResponseListner,
         apiClient.getApiPostCall(ApiContants.getUpdateAllocateRequest, params)
 
     }
+
     override fun success(tag: String?, jsonElement: JsonElement?) {
         try {
             apiClient.progressView.hideLoader()
@@ -178,6 +179,7 @@ class AllComplaintsActivity : AppCompatActivity(), ApiResponseListner,
 
                 if (officeTeamBean.error==false) {
                       Toast.makeText(this, officeTeamBean.msg, Toast.LENGTH_SHORT).show()
+                    finish()
                 }
             }
 /*
@@ -195,8 +197,6 @@ class AllComplaintsActivity : AppCompatActivity(), ApiResponseListner,
         }catch (e:Exception){
             Log.d("error>>",e.localizedMessage)
         }
-
-
 
     }
 
@@ -418,7 +418,7 @@ fun dialogRemark(status: String, workstatus: String, ids: Int) {
         }
     }
 
-    fun openCompletdDialog(status: String, workstatus: String, ids: Int) {
+    fun openCompletdDialog(status: String, workstatus: String, ids: Int,payableAmt: String) {
         val builder = AlertDialog.Builder(this,R.style.CustomAlertDialog)
             .create()
         val view = layoutInflater.inflate(R.layout.dialog_complete_img,null)
@@ -428,6 +428,7 @@ fun dialogRemark(status: String, workstatus: String, ids: Int) {
           editSuggestion = view.findViewById<TextInputEditText>(R.id.editSuggestion)
         editReamrk = view.findViewById<TextInputEditText>(R.id.editComment)
         btnAadharFront = view.findViewById<ImageView>(R.id.btnAadharFront)
+       val tvPayableAmt = view.findViewById<TextView>(R.id.tvPayableAmt)
         val  ivClose = view.findViewById<ImageView>(R.id.ivClose)
         tvImageCount = view.findViewById<TextView>(R.id.tvImageCount)
         builder.setView(view)
@@ -435,9 +436,16 @@ fun dialogRemark(status: String, workstatus: String, ids: Int) {
             builder.dismiss()
         }
         submit.setOnClickListener {
-            builder.dismiss()
-            apiStatrt(status,workstatus,ids)
+
+            if (imgList.size>0){
+                builder.dismiss()
+                apiStatrt(status,workstatus,ids)
+            }else{
+                Toast.makeText(this,"Please Select Image",Toast.LENGTH_SHORT).show()
+            }
+
         }
+        tvPayableAmt.setText(ApiContants.currency+payableAmt)
         btnAadharFront.setOnClickListener {
             //  uploadImage(SELECT_PICTURES1)
             openCameraDialog(SELECT_PICTURES1,CAMERA_PERMISSION_CODE1)
@@ -519,5 +527,9 @@ fun dialogRemark(status: String, workstatus: String, ids: Int) {
         )
     }
 
-
+    override fun onDestroy() {
+        super.onDestroy()
+        // Start the LocationService when the app is closed
+       // startService(Intent(this, LocationService::class.java))
+    }
 }

@@ -2,6 +2,7 @@ package com.example.kk_services.Activity
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -19,7 +20,6 @@ import com.example.kk_services.Model.AlocateRequestBean
 import com.example.kk_services.R
 import com.example.kk_services.Utills.*
 
-import com.example.kk_services.databinding.ActivityAllComplaintsBinding
 import com.example.kk_services.databinding.ActivityAlocateReqBinding
 
 import com.google.android.gms.common.ConnectionResult
@@ -39,7 +39,7 @@ class AllAlocteReqActivity : AppCompatActivity(), ApiResponseListner,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_alocate_req)
-
+        window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         myReceiver = ConnectivityListener()
 
@@ -81,11 +81,12 @@ class AllAlocteReqActivity : AppCompatActivity(), ApiResponseListner,
         binding.rcOfficeTeam.layoutManager = LinearLayoutManager(this)
         var mAdapter = AllAlocateReqAdapter(this, data, object :
             RvStatusComplClickListner {
-            override fun clickPos(status: String,workstatus: String, id: Int) {
+            override fun clickPos(status: String,workstatus: String,amt: String, id: Int) {
                  if (workstatus.equals("rejected")){
                     dialogRemark(status,workstatus,id)
                 }else{
-                     apiAccept(status,id)
+                     dialog(status,id)
+
                  }
             }
         })
@@ -93,7 +94,24 @@ class AllAlocteReqActivity : AppCompatActivity(), ApiResponseListner,
         // rvMyAcFiled.isNestedScrollingEnabled = false
 
     }
+    fun dialog(status: String,ids: Int) {
 
+        val builder = AlertDialog.Builder(this@AllAlocteReqActivity)
+        builder.setMessage("Are you sure you want to start service?")
+            .setCancelable(false)
+            .setPositiveButton("Yes") { dialog, id ->
+                // Delete selected note from database
+
+                apiAccept(status,ids)
+            }
+            .setNegativeButton("No") { dialog, id ->
+                // Dismiss the dialog
+                dialog.dismiss()
+            }
+        val alert = builder.create()
+        alert.show()
+
+    }
     override fun success(tag: String?, jsonElement: JsonElement?) {
         try {
             apiClient.progressView.hideLoader()
@@ -116,6 +134,7 @@ class AllAlocteReqActivity : AppCompatActivity(), ApiResponseListner,
 
                 if (officeTeamBean.error==false) {
                      Toast.makeText(this, officeTeamBean.msg, Toast.LENGTH_SHORT).show()
+                    finish()
                 }
 
             }
@@ -184,5 +203,9 @@ class AllAlocteReqActivity : AppCompatActivity(), ApiResponseListner,
     }
 
     override fun onConnectionFailed(connectionResult: ConnectionResult) {}
-
+    override fun onDestroy() {
+        super.onDestroy()
+        // Start the LocationService when the app is closed
+   //     startService(Intent(this, LocationService::class.java))
+    }
 }

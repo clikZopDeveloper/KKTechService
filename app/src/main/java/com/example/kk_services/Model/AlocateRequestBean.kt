@@ -43,6 +43,10 @@ data class AlocateRequestBean(
         @SerializedName("status")
         val status: String, // pending
         @SerializedName("updated_date")
-        val updatedDate: Any // null
+        val updatedDate: Any, // null
+        @SerializedName("suggestion")
+    val suggestion: String,
+        @SerializedName("recommendation")
+        val recommendation: String, // please provide propershed
     )
 }

@@ -2,9 +2,16 @@ package com.example.kk_services.ApiHelper;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.kk_services.Activity.LoginActivity;
 import com.example.kk_services.Model.BaseResponseBean;
+import com.example.kk_services.Utills.GeneralUtilities;
+import com.example.kk_services.Utills.PrefManager;
 import com.example.kk_services.Utills.Utility;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -119,16 +126,25 @@ public class ApiController {
                 .subscribeWith(new DisposableSingleObserver<JsonElement>() {
                     @Override
                     public void onSuccess(JsonElement jsonElement) {
-
                         Log.e("onSuccess: ", jsonElement.toString());
                         BaseResponseBean baseResponse = getConvertIntoModel(jsonElement.toString(), BaseResponseBean.class);
 
                         if (baseResponse.getError()==false) {
                             responseListner.success(tag, jsonElement);
+                        }else if (baseResponse.getError()==true && baseResponse.getMsg().equals("Unauthorized request.")) {
+                            Toast.makeText(context, "Logout Successfully", Toast.LENGTH_SHORT).show();
+                            PrefManager.clear();
+                           // GeneralUtilities.launchclearbackActivity((AppCompatActivity) context, LoginActivity.class);
+                            Intent intent = new Intent(context, LoginActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            context.startActivity(intent);
+
+
                         } else {
                             responseListner.failure(tag, baseResponse.getMsg());
                         }
-
                     }
 
                     @Override

@@ -1,6 +1,7 @@
 package com.example.kk_services.Activity
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -37,7 +38,7 @@ class AllExpnImagesActivity : AppCompatActivity(), ApiResponseListner,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_allexp_img)
-
+        window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         myReceiver = ConnectivityListener()
 
@@ -126,5 +127,9 @@ class AllExpnImagesActivity : AppCompatActivity(), ApiResponseListner,
     }
 
     override fun onConnectionFailed(connectionResult: ConnectionResult) {}
-
+    override fun onDestroy() {
+        super.onDestroy()
+        // Start the LocationService when the app is closed
+    //    startService(Intent(this, LocationService::class.java))
+    }
 }
