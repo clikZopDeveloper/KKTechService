@@ -136,8 +136,6 @@ class DashboardActivity : AppCompatActivity(), ApiResponseListner {
         //  setupActionBarWithNavController(navController, appBarConfiguration)
         navBottomView.setupWithNavController(navController)
 
-
-
         llMaster.setOnClickListener(View.OnClickListener {
             if (isActive) {
                 isActive = false
